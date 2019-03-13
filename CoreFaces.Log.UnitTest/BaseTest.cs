@@ -12,7 +12,7 @@ namespace CoreFaces.Log.UnitTest
 {
     public class BaseTest
     {
-        public LogDatabaseContext _statusDatabaseContext;
+        public LogDatabaseContext _logDatabaseContext;
         public readonly ILogCategoryService _logCategoryService;
         public readonly ILogService _logService;
         public readonly ILogSchemaService _logSchemaService;
@@ -24,17 +24,17 @@ namespace CoreFaces.Log.UnitTest
             DbContextOptionsBuilder<LogDatabaseContext> builder = new DbContextOptionsBuilder<LogDatabaseContext>();
             var connectionString = "server=localhost;userid=root;password=12345;database=Identity;";
             builder.UseMySql(connectionString);
-           
 
-            _statusDatabaseContext = new LogDatabaseContext(builder.Options);
+
+            _logDatabaseContext = new LogDatabaseContext(builder.Options);
 
             LogSettings _statusSettings = new LogSettings() { FileUploadFolderPath = "c:/" };
             IOptions<LogSettings> statusOptions = Options.Create(_statusSettings);
             IHttpContextAccessor iHttpContextAccessor = new HttpContextAccessor { HttpContext = new DefaultHttpContext() };
 
-            _logCategoryService = new LogCategoryService(_statusDatabaseContext, statusOptions, iHttpContextAccessor);
-            _logService = new LogService(_statusDatabaseContext, statusOptions, iHttpContextAccessor);
-            _logSchemaService=new LogSchemaService(_statusDatabaseContext, statusOptions, iHttpContextAccessor);
+            _logCategoryService = new LogCategoryService(_logDatabaseContext, statusOptions, iHttpContextAccessor);
+            _logService = new LogService(_logDatabaseContext, statusOptions, iHttpContextAccessor);
+            _logSchemaService=new LogSchemaService(_logDatabaseContext, statusOptions, iHttpContextAccessor);
         }
     }
 

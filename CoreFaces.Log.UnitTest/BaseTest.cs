@@ -28,8 +28,8 @@ namespace CoreFaces.Log.UnitTest
 
             _logDatabaseContext = new LogDatabaseContext(builder.Options);
 
-            LogSettings _statusSettings = new LogSettings() { FileUploadFolderPath = "c:/" };
-            IOptions<LogSettings> statusOptions = Options.Create(_statusSettings);
+            LogSettings _logSettings = new LogSettings() { FileUploadFolderPath = "c:/" };
+            IOptions<LogSettings> statusOptions = Options.Create(_logSettings);
             IHttpContextAccessor iHttpContextAccessor = new HttpContextAccessor { HttpContext = new DefaultHttpContext() };
 
             _logCategoryService = new LogCategoryService(_logDatabaseContext, statusOptions, iHttpContextAccessor);

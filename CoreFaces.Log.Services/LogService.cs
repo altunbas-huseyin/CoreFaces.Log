@@ -25,6 +25,30 @@ namespace CoreFaces.Log.Services
             return _logRepository.GetById(id);
         }
 
+        public Guid Save(Guid LogCategoryId, string TableName, string TableRef, string UserId, string Name, string Description)
+        {
+            Models.Domain.Log status = new Models.Domain.Log
+            {
+                LogCategoryId = LogCategoryId,
+                TableName = TableName,
+                TableRef = TableRef,
+                UserId = UserId,
+                Name = Name,
+                Description = Description,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                ExceptionMessage = "",
+                ExceptionSource = "",
+                ExceptionType = "",
+                ExceptionUrl = "",
+                SessionId = "",
+                StatusId = 2,
+                TransactionId = ""
+            };
+            _logRepository.Save(status);
+            return status.Id;
+        }
+
         public Guid Save(Models.Domain.Log status)
         {
             _logRepository.Save(status);

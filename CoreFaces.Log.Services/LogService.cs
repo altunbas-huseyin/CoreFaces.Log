@@ -10,7 +10,7 @@ namespace CoreFaces.Log.Services
 {
     public interface ILogService : IBaseService<CoreFaces.Log.Models.Domain.Log>
     {
-
+        Guid Save(Guid LogCategoryId, string TableName, string TableRef, string UserId, string Name, string Description);
     }
     public class LogService : ILogService
     {

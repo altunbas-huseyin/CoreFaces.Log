@@ -1,4 +1,5 @@
-﻿using CoreFaces.Log.Models.Models;
+﻿using CoreFaces.Log.Models.Domain;
+using CoreFaces.Log.Models.Models;
 using CoreFaces.Log.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -11,6 +12,8 @@ namespace CoreFaces.Log.Services
     public interface ILogService : IBaseService<CoreFaces.Log.Models.Domain.Log>
     {
         Guid Save(Guid LogCategoryId, string TableName, string TableRef, string UserId, string Name, string Description);
+        List<Models.Domain.Log> GetByTableName(string tableName);
+        List<Models.Domain.Log> Get(Func<Models.Domain.Log, bool> filter = null);
     }
     public class LogService : ILogService
     {
@@ -69,6 +72,16 @@ namespace CoreFaces.Log.Services
         public List<Models.Domain.Log> GetAll()
         {
             return _logRepository.GetAll();
+        }
+
+        public List<Models.Domain.Log> GetByTableName(string tableName)
+        {
+            return _logRepository.GetByTableName(tableName);
+        }
+
+        public List<Models.Domain.Log> Get(Func<Models.Domain.Log, bool> filter = null)
+        {
+            return _logRepository.Get(filter);
         }
     }
 

@@ -13,7 +13,8 @@ namespace CoreFaces.Log.Repositories
 
     public interface ILogRepository : IBaseRepository<Models.Domain.Log>
     {
-
+        List<Models.Domain.Log> GetByTableName(string tableName);
+        List<Models.Domain.Log> Get(Func<Models.Domain.Log, bool> filter = null);
     }
     public class StatusRepository : Licence, ILogRepository
     {
@@ -62,6 +63,18 @@ namespace CoreFaces.Log.Repositories
         public List<Models.Domain.Log> GetAll()
         {
             return _databaseContext.Set<Models.Domain.Log>().ToList();
+        }
+
+        public List<Models.Domain.Log> GetByTableName(string tableName)
+        {
+            List<Models.Domain.Log> models = _databaseContext.Set<Models.Domain.Log>().Where(p => p.TableName == tableName).ToList();
+            return models;
+        }
+
+        public List<Models.Domain.Log> Get(Func<Models.Domain.Log, bool> filter = null)
+        {
+            List<Models.Domain.Log> models = _databaseContext.Set<Models.Domain.Log>().Where(filter ?? (s => true)).ToList();
+            return models;
         }
     }
 
